@@ -7,7 +7,10 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
-@interface GameScene : SKScene
+#import "Maze.h"
+#import "State.h"
+@interface GameScene : SKScene{
+    Maze *masterMaze;
+}
 
 @end

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C03D34E61DCCD2B90014DBF1 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = C03D34E51DCCD2B90014DBF1 /* Stack.m */; };
+		C03D34E91DCCD2C10014DBF1 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = C03D34E81DCCD2C10014DBF1 /* State.m */; };
+		C03D34EC1DCCD2D30014DBF1 /* Maze.m in Sources */ = {isa = PBXBuildFile; fileRef = C03D34EB1DCCD2D30014DBF1 /* Maze.m */; };
+		C03D34EF1DCCD2F40014DBF1 /* DfsState.m in Sources */ = {isa = PBXBuildFile; fileRef = C03D34EE1DCCD2F40014DBF1 /* DfsState.m */; };
+		C04E75011DCD9B320054B90D /* File.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C04E75001DCD9B320054B90D /* File.rtf */; };
+		C04E75031DCD9C190054B90D /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = C04E75021DCD9C190054B90D /* test.txt */; };
 		C08978441DC8CBC7004AD7D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C08978431DC8CBC7004AD7D0 /* AppDelegate.m */; };
 		C08978471DC8CBC7004AD7D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C08978461DC8CBC7004AD7D0 /* main.m */; };
 		C08978491DC8CBC7004AD7D0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C08978481DC8CBC7004AD7D0 /* GameScene.sks */; };
@@ -17,6 +23,13 @@
 		C08978561DC8CBC7004AD7D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C08978541DC8CBC7004AD7D0 /* Main.storyboard */; };
 		C08978611DC8CBC7004AD7D0 /* MazeSolverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C08978601DC8CBC7004AD7D0 /* MazeSolverTests.m */; };
 		C089786C1DC8CBC7004AD7D0 /* MazeSolverUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C089786B1DC8CBC7004AD7D0 /* MazeSolverUITests.m */; };
+		C0BE8C7A1DD2B51D000139B3 /* BfsState.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BE8C791DD2B51D000139B3 /* BfsState.m */; };
+		C0C903C71DD56EB7007C1959 /* MazeSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C903C61DD56EB7007C1959 /* MazeSolver.m */; };
+		C0C903CA1DD57DCE007C1959 /* AnimationState.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C903C91DD57DCE007C1959 /* AnimationState.m */; };
+		C0F41F051DD1690C0050FFDD /* largeMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = C0F41F041DD1690C0050FFDD /* largeMaze.txt */; };
+		C0F41F071DD16C4F0050FFDD /* smallMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = C0F41F061DD16C4F0050FFDD /* smallMaze.txt */; };
+		C0F41F091DD16F7D0050FFDD /* hugeMaze.txt in Resources */ = {isa = PBXBuildFile; fileRef = C0F41F081DD16F7D0050FFDD /* hugeMaze.txt */; };
+		C0F41F0C1DD19E410050FFDD /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F41F0B1DD19E410050FFDD /* Queue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +50,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C03D34E41DCCD2B90014DBF1 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
+		C03D34E51DCCD2B90014DBF1 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		C03D34E71DCCD2C10014DBF1 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
+		C03D34E81DCCD2C10014DBF1 /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
+		C03D34EA1DCCD2D30014DBF1 /* Maze.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Maze.h; sourceTree = "<group>"; };
+		C03D34EB1DCCD2D30014DBF1 /* Maze.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Maze.m; sourceTree = "<group>"; };
+		C03D34ED1DCCD2F40014DBF1 /* DfsState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DfsState.h; sourceTree = "<group>"; };
+		C03D34EE1DCCD2F40014DBF1 /* DfsState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DfsState.m; sourceTree = "<group>"; };
+		C04E75001DCD9B320054B90D /* File.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = File.rtf; sourceTree = "<group>"; };
+		C04E75021DCD9C190054B90D /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		C089783F1DC8CBC7004AD7D0 /* MazeSolver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeSolver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C08978421DC8CBC7004AD7D0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C08978431DC8CBC7004AD7D0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -56,6 +79,17 @@
 		C08978671DC8CBC7004AD7D0 /* MazeSolverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeSolverUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C089786B1DC8CBC7004AD7D0 /* MazeSolverUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MazeSolverUITests.m; sourceTree = "<group>"; };
 		C089786D1DC8CBC7004AD7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0BE8C781DD2B51D000139B3 /* BfsState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BfsState.h; sourceTree = "<group>"; };
+		C0BE8C791DD2B51D000139B3 /* BfsState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BfsState.m; sourceTree = "<group>"; };
+		C0C903C51DD56EB7007C1959 /* MazeSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeSolver.h; sourceTree = "<group>"; };
+		C0C903C61DD56EB7007C1959 /* MazeSolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeSolver.m; sourceTree = "<group>"; };
+		C0C903C81DD57DCE007C1959 /* AnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationState.h; sourceTree = "<group>"; };
+		C0C903C91DD57DCE007C1959 /* AnimationState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationState.m; sourceTree = "<group>"; };
+		C0F41F041DD1690C0050FFDD /* largeMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = largeMaze.txt; sourceTree = "<group>"; };
+		C0F41F061DD16C4F0050FFDD /* smallMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smallMaze.txt; sourceTree = "<group>"; };
+		C0F41F081DD16F7D0050FFDD /* hugeMaze.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hugeMaze.txt; sourceTree = "<group>"; };
+		C0F41F0A1DD19E410050FFDD /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		C0F41F0B1DD19E410050FFDD /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +146,32 @@
 				C089784A1DC8CBC7004AD7D0 /* Actions.sks */,
 				C089784C1DC8CBC7004AD7D0 /* GameScene.h */,
 				C089784D1DC8CBC7004AD7D0 /* GameScene.m */,
+				C0BE8C781DD2B51D000139B3 /* BfsState.h */,
+				C0BE8C791DD2B51D000139B3 /* BfsState.m */,
 				C089784F1DC8CBC7004AD7D0 /* ViewController.h */,
 				C08978501DC8CBC7004AD7D0 /* ViewController.m */,
+				C03D34E41DCCD2B90014DBF1 /* Stack.h */,
+				C0C903C51DD56EB7007C1959 /* MazeSolver.h */,
+				C0C903C61DD56EB7007C1959 /* MazeSolver.m */,
+				C03D34E51DCCD2B90014DBF1 /* Stack.m */,
+				C0F41F0A1DD19E410050FFDD /* Queue.h */,
+				C0F41F0B1DD19E410050FFDD /* Queue.m */,
+				C03D34E71DCCD2C10014DBF1 /* State.h */,
+				C03D34E81DCCD2C10014DBF1 /* State.m */,
+				C0C903C81DD57DCE007C1959 /* AnimationState.h */,
+				C0C903C91DD57DCE007C1959 /* AnimationState.m */,
+				C03D34EA1DCCD2D30014DBF1 /* Maze.h */,
+				C03D34EB1DCCD2D30014DBF1 /* Maze.m */,
+				C03D34EE1DCCD2F40014DBF1 /* DfsState.m */,
+				C03D34ED1DCCD2F40014DBF1 /* DfsState.h */,
 				C08978521DC8CBC7004AD7D0 /* Assets.xcassets */,
 				C08978541DC8CBC7004AD7D0 /* Main.storyboard */,
 				C08978571DC8CBC7004AD7D0 /* Info.plist */,
+				C04E75021DCD9C190054B90D /* test.txt */,
+				C0F41F041DD1690C0050FFDD /* largeMaze.txt */,
+				C0F41F081DD16F7D0050FFDD /* hugeMaze.txt */,
+				C0F41F061DD16C4F0050FFDD /* smallMaze.txt */,
+				C04E75001DCD9B320054B90D /* File.rtf */,
 				C08978451DC8CBC7004AD7D0 /* Supporting Files */,
 			);
 			path = MazeSolver;
@@ -254,9 +309,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C04E75011DCD9B320054B90D /* File.rtf in Resources */,
+				C0F41F071DD16C4F0050FFDD /* smallMaze.txt in Resources */,
 				C08978491DC8CBC7004AD7D0 /* GameScene.sks in Resources */,
 				C08978531DC8CBC7004AD7D0 /* Assets.xcassets in Resources */,
 				C089784B1DC8CBC7004AD7D0 /* Actions.sks in Resources */,
+				C04E75031DCD9C190054B90D /* test.txt in Resources */,
+				C0F41F091DD16F7D0050FFDD /* hugeMaze.txt in Resources */,
+				C0F41F051DD1690C0050FFDD /* largeMaze.txt in Resources */,
 				C08978561DC8CBC7004AD7D0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,8 +343,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C08978471DC8CBC7004AD7D0 /* main.m in Sources */,
+				C03D34EC1DCCD2D30014DBF1 /* Maze.m in Sources */,
 				C089784E1DC8CBC7004AD7D0 /* GameScene.m in Sources */,
+				C03D34EF1DCCD2F40014DBF1 /* DfsState.m in Sources */,
+				C0F41F0C1DD19E410050FFDD /* Queue.m in Sources */,
+				C0BE8C7A1DD2B51D000139B3 /* BfsState.m in Sources */,
 				C08978511DC8CBC7004AD7D0 /* ViewController.m in Sources */,
+				C03D34E91DCCD2C10014DBF1 /* State.m in Sources */,
+				C0C903CA1DD57DCE007C1959 /* AnimationState.m in Sources */,
+				C0C903C71DD56EB7007C1959 /* MazeSolver.m in Sources */,
+				C03D34E61DCCD2B90014DBF1 /* Stack.m in Sources */,
 				C08978441DC8CBC7004AD7D0 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,6 +580,7 @@
 				C08978721DC8CBC7004AD7D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C08978731DC8CBC7004AD7D0 /* Build configuration list for PBXNativeTarget "MazeSolverTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +589,7 @@
 				C08978751DC8CBC7004AD7D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C08978761DC8CBC7004AD7D0 /* Build configuration list for PBXNativeTarget "MazeSolverUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +598,7 @@
 				C08978781DC8CBC7004AD7D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
