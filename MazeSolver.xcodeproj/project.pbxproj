@@ -122,8 +122,8 @@
 				C03D34E81DCCD2C10014DBF1 /* State.m */,
 				C0BE8C781DD2B51D000139B3 /* BfsState.h */,
 				C0BE8C791DD2B51D000139B3 /* BfsState.m */,
-				C03D34EE1DCCD2F40014DBF1 /* DfsState.m */,
 				C03D34ED1DCCD2F40014DBF1 /* DfsState.h */,
+				C03D34EE1DCCD2F40014DBF1 /* DfsState.m */,
 			);
 			name = States;
 			sourceTree = "<group>";

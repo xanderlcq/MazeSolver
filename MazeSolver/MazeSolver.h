@@ -23,7 +23,18 @@
     double blockHeight;
     
 }
--(id) initWithWindowSize:(NSString *)f windowWidth:(double)w windowHeight:(double) h;
--(NSMutableArray *) solve:(int) mode;
 @property NSString *fileName;
+
+-(id) initWithWindowSize:(NSString *)f windowWidth:(double)w windowHeight:(double) h;
+
+
+/**
+ Solve the maze and return an animation array
+
+ @param mode 1 for bfs, 2 for dfs
+
+ @return array of animationStates
+ */
+-(NSMutableArray *) solve:(int) mode;
+
 @end

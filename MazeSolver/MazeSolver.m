@@ -40,7 +40,7 @@
         Queue *q = [[Queue alloc] initWith:state0];
         
         if(![self solveBfsIterative:q maze:maze animation:animationArray]){
-            return nil;
+            return animationArray;
         }
         
         BfsState *state = (BfsState *)[q peek];
@@ -70,7 +70,7 @@
         DfsState *state0 = [[DfsState alloc] initWithXY:start.x y:start.y];
         Stack *stack = [[Stack alloc] init];
         if(![self solveDfs:state0 path:stack maze:maze animation:animationArray]){
-            return nil;
+            return animationArray;
         }
     }
     return animationArray;
@@ -90,15 +90,32 @@
         BfsState *current = (BfsState *)[q dequeue];
         [maze mark:current];
         
-
-        [aArray addObject:[self createAnimationState:current addToScreen:YES]];
+        // Add searching head animation
+        BfsState *currentSearchAnimation = [[BfsState alloc] initWithXY:current.x y:current.y];
+        [currentSearchAnimation setupGraphics:windowWidth windowHeight:windowHeight blockWidth:blockWidth blockHeight:blockHeight];
+        currentSearchAnimation.graphic.fillColor = [SKColor redColor];
+        AnimationState *addingSearchState = [[AnimationState alloc] init];
+        addingSearchState.state = currentSearchAnimation;
+        addingSearchState.addToScreen = YES;
+        addingSearchState.removeFromScreen = NO;
+        [aArray addObject:addingSearchState];
+        
+        
         
         while([current hasNext:maze]){
             BfsState *neighbor = [current getNext:maze];
             if(neighbor){
+                [aArray addObject:[self createAnimationState:neighbor addToScreen:YES]];
                 [q enqueue:neighbor];
             }
         }
+        
+        // Removing searching head animation
+        AnimationState *removingSearchState = [[AnimationState alloc] init];
+        removingSearchState.state = currentSearchAnimation;
+        removingSearchState.addToScreen = NO;
+        removingSearchState.removeFromScreen = YES;
+        [aArray addObject:removingSearchState];
     }
 
 }

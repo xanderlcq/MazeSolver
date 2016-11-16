@@ -13,16 +13,22 @@
 #import "BfsState.h"
 
 @implementation GameScene {
+    
+    //Graphics config
     double blockWidth;
     double blockHeight;
     double mazeScreenWidth;
     double mazeScreenHeight;
+    
+    // Animation config
     float previousTime;
     float interval;
     BOOL isForwardAnimating;
     BOOL isBackwardAnimating;
     BOOL isLoaded;
     int steps;
+    
+    // Maze config
     NSString *file;
     NSMutableArray *solution;
     int solveMethod;
@@ -101,13 +107,34 @@
         isBackwardAnimating = YES;
 }
 -(void) keyUp:(NSEvent *)event{
-    NSLog(@"Characters: %@", [event characters]);
-    NSLog(@"KeyCode: %hu", [event keyCode]);
+    NSLog(@"%d",[event keyCode]);
+    //Speed operation
+    if([event keyCode] == 126){
+        if(interval > 0.001){
+            interval -=0.001;
+        }
+        return;
+    }
+    
+    if([event keyCode] == 125){
+        if(interval < 0.1){
+            interval +=0.001;
+        }
+        return;
+    }
+    
+    //Animation operations
+    
+    isForwardAnimating = NO;
+    isBackwardAnimating = NO;
+    
     if([event keyCode] == 124)
         [self nextAnimationFrame];
     
     if([event keyCode] == 123)
         [self previousAnimationFrame];
+    
+    // Switching maze or mode
     if([event keyCode] == 18){
         file =@"smallMaze";
         [self solve:file method:solveMethod];
@@ -128,15 +155,12 @@
         solveMethod = 2;
         [self solve:file method:solveMethod];
     }
-
-    isForwardAnimating = NO;
-    isBackwardAnimating = NO;
 }
+
 - (void)mouseDown:(NSEvent *)theEvent {
     isForwardAnimating = !isForwardAnimating;
 }
 -(void) previousAnimationFrame{
-    
     if(steps < 0)
         return;
     AnimationState *aState = [solution objectAtIndex:steps];
@@ -147,6 +171,7 @@
     }
     steps--;
 }
+
 -(void) nextAnimationFrame{
     steps++;
     if(steps == [solution count]){

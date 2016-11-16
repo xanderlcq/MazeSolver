@@ -9,8 +9,4 @@
 #import "AnimationState.h"
 
 @implementation AnimationState
-
-
-
-
 @end

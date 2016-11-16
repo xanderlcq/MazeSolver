@@ -16,9 +16,12 @@
 }
 @property BfsState *prev;
 
-
+//Check if there's neighbors or not
 -(bool) hasNext:(Maze *)maze;
+
+//Get the next neighbor
 -(BfsState *) getNext:(Maze *) maze;
+
 -(id) init;
 -(id) initWithX:(int) x y:(int)y previousState:(BfsState *)p;
 -(id) initWithXY:(int)x y:(int)y;
