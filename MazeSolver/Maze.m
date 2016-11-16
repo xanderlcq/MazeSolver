@@ -12,14 +12,7 @@
 -(NSMutableArray *) getMazeArray{
     return maze;
 }
--(id) initWithSize:(int)size{
-    self = [super init];
-    if(self){
-        maze = [[NSMutableArray alloc] init];
-        self.size = size;
-    }
-    return self;
-}
+
 -(id) init{
     self = [super init];
     if(self){
@@ -71,17 +64,21 @@
 }
 
 
--(bool) loadMaze:(NSString *) fileName{
+-(BOOL) loadMaze:(NSString *) fileName{
     maze = [[NSMutableArray alloc] init];
     NSString* path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
-    NSLog(@"%@",path);
     NSError *errorReading;
+    if(errorReading){
+        NSLog(@"Reading error  %@",errorReading);
+        maze = nil;
+        return NO;
+    }
     NSArray *linesOfText = [[NSString stringWithContentsOfFile:path
                                                       encoding:NSUTF8StringEncoding
                                                          error:&errorReading]
                             componentsSeparatedByString:@"\n"];
     
-    NSLog(@"Reading error  %@",errorReading);
+    
     for(int i = 0; i < [linesOfText count]-1;i++){
         //NSLog(@"%@",[linesOfText objectAtIndex:i]);
         NSMutableArray *arr = [[NSMutableArray alloc]init];
@@ -115,4 +112,7 @@
 -(void) mark:(State *) state{
     [[maze objectAtIndex:state.y] setObject:@"#" atIndex:state.x];
 }
+
+
+
 @end

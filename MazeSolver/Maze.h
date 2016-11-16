@@ -11,8 +11,6 @@
 @interface Maze : NSObject{
     NSMutableArray *maze;
 }
-@property int size;
--(id) initWithSize:(int) size;
 -(id) init;
 -(bool) loadMaze:(NSString *) fileName;
 -(bool) isEmpty:(State *) state;

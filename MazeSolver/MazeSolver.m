@@ -10,25 +10,30 @@
 
 @implementation MazeSolver
 
--(id) initWithWindowSize:(Maze *) m windowWidth:(double)w windowHeight:(double) h{
+-(id) initWithWindowSize:(NSString *)f windowWidth:(double)w windowHeight:(double) h{
     self = [super init];
     if(self){
         windowWidth = w;
         windowHeight = h;
-        masterMaze = m;
+        masterMaze = [[Maze alloc] init];
+        [masterMaze loadMaze:f];
         blockWidth =w/[masterMaze getWidth];
         blockHeight =h/[masterMaze getHeight];
+        self.fileName = f;
     }
     return self;
 }
 
 
 
--(NSMutableArray *) solve:(Maze *) maze mode:(int) mode{
+-(NSMutableArray *) solve:(int) mode{
     NSMutableArray *animationArray = [[NSMutableArray alloc] init];
     if(!masterMaze || (mode!= 1 && mode != 2))
         return nil;
-    State *start = [masterMaze getStart];
+    
+    Maze *maze = [[Maze alloc] init];
+    [maze loadMaze:self.fileName];
+    State *start = [maze getStart];
     
     if(mode == 1){
         BfsState *state0 = [[BfsState alloc] initWithXY:start.x y:start.y];
@@ -39,9 +44,15 @@
         }
         
         BfsState *state = (BfsState *)[q peek];
+        
+        //For Graphic
+        state = state.prev;
+        
+        
         while(state.prev){
-            NSLog(@"Bfs -- X: %d Y: %d",state.x,state.y);
+            //NSLog(@"Bfs -- X: %d Y: %d",state.x,state.y);
             
+            //Back Tracking Graphics
             BfsState *animationTemp = [[BfsState alloc] initWithXY:state.x y:state.y];
             [animationTemp setupGraphics:windowWidth windowHeight:windowHeight blockWidth:blockWidth blockHeight:blockHeight];
             animationTemp.graphic.fillColor = [SKColor blueColor];
@@ -51,7 +62,6 @@
             [animationArray addObject:aState];
             
             state = state.prev;
-
         }
     }
     
@@ -80,13 +90,8 @@
         BfsState *current = (BfsState *)[q dequeue];
         [maze mark:current];
         
-        //Without initing new state
-        [current setupGraphics:windowWidth windowHeight:windowHeight blockWidth:blockWidth blockHeight:blockHeight];
-        current.graphic.fillColor = [SKColor yellowColor];
-        AnimationState *aState = [[AnimationState alloc] init];
-        aState.state = current;
-        aState.addToScreen = YES;
-        [aArray addObject:aState];
+
+        [aArray addObject:[self createAnimationState:current addToScreen:YES]];
         
         while([current hasNext:maze]){
             BfsState *neighbor = [current getNext:maze];
@@ -98,7 +103,6 @@
 
 }
 
-
 // Recursive
 -(BOOL) solveBfsRecursive:(Queue *) q maze:(Maze *) maze animation:(NSMutableArray *) aArray{
     if([q isEmpty]){
@@ -109,14 +113,7 @@
     }
     BfsState *current = (BfsState *)[q dequeue];
     [maze mark:current];
-    
-    //Without initing new state
-    [current setupGraphics:windowWidth windowHeight:windowHeight blockWidth:blockWidth blockHeight:blockHeight];
-    current.graphic.fillColor = [SKColor yellowColor];
-    AnimationState *aState = [[AnimationState alloc] init];
-    aState.state = current;
-    aState.addToScreen = YES;
-    [aArray addObject:aState];
+    [aArray addObject:[self createAnimationState:current addToScreen:YES]];
 
     while([current hasNext:maze]){
         BfsState *neighbor = [current getNext:maze];
@@ -130,41 +127,34 @@
 
 
 -(BOOL)solveDfs:(DfsState *) current path:(Stack *) path maze:(Maze *) maze  animation:(NSMutableArray *) aArray{
+    //Not solvable
     if([path isEmpty]){
         if(![maze isStart:current])
             return NO;
+        else
+            [aArray addObject:[self createAnimationState:current addToScreen:YES]];
     }
+    //Done
     if([maze isFinished:current]){
+        [aArray removeLastObject];
         [path push:current];
         return YES;
     }
-    
+    //Solve
     while([current hasNext:maze]){
         DfsState *next = [current getNext:maze];
         if(next){
             if(![[path peek] equals:next]){
                 NSLog(@"PUSHING x: %d y: %d",current.x,current.y);
 
-                //Without initing new state
-                [current setupGraphics:windowWidth windowHeight:windowHeight blockWidth:blockWidth blockHeight:blockHeight];
-                current.graphic.fillColor = [SKColor yellowColor];
-                AnimationState *aState = [[AnimationState alloc] init];
-                aState.state = current;
-                aState.addToScreen = YES;
-                [aArray addObject:aState];
+                [aArray addObject:[self createAnimationState:next addToScreen:YES]];
                 
                 [path push:current];
                 [maze mark:current];
                 if(![self solveDfs:next path:path maze:maze animation:aArray]){
-                    
-                    //Without initing new state
-                    DfsState *temp = (DfsState *)[path pop];
-                    NSLog(@"POPING x: %d y: %d",temp.x,temp.y);
-                    AnimationState *aState = [[AnimationState alloc] init];
-                    aState.state = temp;
-                    aState.removeFromScreen = YES;
-                    [aArray addObject:aState];
-
+                    [path pop];
+                    NSLog(@"POPING x: %d y: %d",next.x,next.y);
+                    [aArray addObject:[self createAnimationState:next addToScreen:NO]];
                 }else{
                     return YES;
                 }
@@ -175,4 +165,20 @@
     }
     return NO;
 }
+
+
+
+-(AnimationState *)createAnimationState:(State *) current addToScreen:(BOOL) aToScreen{
+    [current setupGraphics:windowWidth windowHeight:windowHeight blockWidth:blockWidth blockHeight:blockHeight];
+    current.graphic.fillColor = [SKColor purpleColor];
+    AnimationState *aState = [[AnimationState alloc] init];
+    aState.state = current;
+    if(aToScreen){
+        aState.addToScreen = YES;
+    }else{
+        aState.removeFromScreen = YES;
+    }
+    return aState;
+}
+
 @end

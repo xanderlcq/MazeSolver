@@ -13,7 +13,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     // Load the SKScene from 'GameScene.sks'
     GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
     
@@ -26,6 +26,4 @@
     self.skView.showsFPS = YES;
     self.skView.showsNodeCount = YES;
 }
-
-
 @end

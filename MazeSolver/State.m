@@ -25,5 +25,6 @@
 }
 -(void) setupGraphics:(double) windowWidth windowHeight:(double)windowHeight blockWidth:(double) width blockHeight:(double)height{
     self.graphic = [SKShapeNode shapeNodeWithRect:CGRectMake(0-windowWidth/2+self.x*width, 0+windowHeight/2-height-self.y*height, width, height)];
+    self.graphic.lineWidth = 0;
 }
 @end

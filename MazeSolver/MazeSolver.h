@@ -15,11 +15,15 @@
 #import "Stack.h"
 #import "AnimationState.h"
 @interface MazeSolver : NSObject{
+    
     Maze *masterMaze;
     double windowWidth;
     double windowHeight;
     double blockWidth;
     double blockHeight;
+    
 }
-
+-(id) initWithWindowSize:(NSString *)f windowWidth:(double)w windowHeight:(double) h;
+-(NSMutableArray *) solve:(int) mode;
+@property NSString *fileName;
 @end

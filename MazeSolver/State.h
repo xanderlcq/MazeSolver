@@ -15,6 +15,7 @@
 @property int y;
 -(bool) equals:(State *) n;
 -(id) initWithXY:(int) x y:(int)y;
+
 @property SKShapeNode *graphic;
 
 -(void) setupGraphics:(double) windowWidth windowHeight:(double)windowHeight blockWidth:(double) width blockHeight:(double)height;

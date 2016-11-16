@@ -13,59 +13,64 @@
 #import "BfsState.h"
 
 @implementation GameScene {
-    SKShapeNode *_spinnyNode;
-    SKLabelNode *_label;
-    int counter;
-    double width;
-    double height;
+    double blockWidth;
+    double blockHeight;
+    double mazeScreenWidth;
+    double mazeScreenHeight;
+    float previousTime;
+    float interval;
+    BOOL isForwardAnimating;
+    BOOL isBackwardAnimating;
+    BOOL isLoaded;
     int steps;
-    NSString *fileName;
+    NSString *file;
+    NSMutableArray *solution;
+    int solveMethod;
     
 }
 
 - (void)didMoveToView:(SKView *)view {
-    
+    previousTime = -1;
+    isForwardAnimating = NO;
+    isBackwardAnimating = NO;
+    isLoaded = NO;
     steps = 0;
-    fileName = @"largeMaze";
-    // Setup your scene here
-    
-    // Get label node from scene and store it for use later
-    _label = (SKLabelNode *)[self childNodeWithName:@"//helloLabel"];
-    
-    _label.alpha = 0.0;
-    [_label runAction:[SKAction fadeInWithDuration:2.0]];
-    
-    CGFloat w = (self.size.width + self.size.height) * 0.05;
-    
-    // Create shape node to use during mouse interaction
-    _spinnyNode = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(w, w) cornerRadius:w * 0.3];
-    _spinnyNode.lineWidth = 2.5;
-    
-    [_spinnyNode runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI duration:1]]];
-    [_spinnyNode runAction:[SKAction sequence:@[
-                                                [SKAction waitForDuration:0.5],
-                                                [SKAction fadeOutWithDuration:0.5],
-                                                [SKAction removeFromParent],
-                                                ]]];
-    SKShapeNode *_rectNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0.0, 0.0, 10, 10)];
-    _rectNode.lineWidth = 3;
-    _rectNode.strokeColor = [SKColor redColor];
-
-    masterMaze = [[Maze alloc] init];
-    [masterMaze loadMaze:fileName];
-    width =self.size.width/[[[masterMaze getMazeArray] objectAtIndex:0] count];
-    height =self.size.height/[[masterMaze getMazeArray] count];
-    //[self drawMaze:masterMaze];
-    
+    interval = 0.005;
+    mazeScreenWidth = self.size.width;
+    mazeScreenHeight = self.size.height-160;
+    solveMethod = 2;
+    file = @"mediumMaze";
+    [self solve:file method:solveMethod];
 }
+
+
+
+-(void) solve:(NSString *) fname method:(int) m{
+    [self removeAllChildren];
+    NSString *fileName = fname;
+    
+    masterMaze = [[Maze alloc] init];
+    if(![masterMaze loadMaze:fileName]){
+        return;
+    }
+    blockWidth =mazeScreenWidth/[masterMaze getWidth];
+    blockHeight = mazeScreenHeight/[masterMaze getHeight];
+    [self drawMaze:masterMaze];
+    
+    
+    MazeSolver *solver = [[MazeSolver alloc] initWithWindowSize:fileName windowWidth:mazeScreenWidth windowHeight:mazeScreenHeight];
+    solution = [solver solve:m];
+}
+
+
 -(void) drawMaze:(Maze *) maze{
     NSMutableArray *mazeArray = [maze getMazeArray];
-    double x = 0-self.size.width/2;
-    double y = 0+self.size.height/2-height; //Why 0,0 of the rectangle is the bottom left
-    
+    double x = 0-mazeScreenWidth/2;
+    double y = 0+mazeScreenHeight/2-blockHeight;
+    steps = 0;
     for(int i = 0; i < [mazeArray count];i++){
         for(int k = 0; k < [[mazeArray objectAtIndex:0] count];k++){
-            SKShapeNode *_rectNode = [SKShapeNode shapeNodeWithRect:CGRectMake(x, y, width, height)];
+            SKShapeNode *_rectNode = [SKShapeNode shapeNodeWithRect:CGRectMake(x, y, blockWidth, blockHeight)];
             if([[[mazeArray objectAtIndex:i] objectAtIndex:k] isEqual: @"S"]){
                 _rectNode.fillColor = [SKColor greenColor];
             }
@@ -78,190 +83,108 @@
             if([[[mazeArray objectAtIndex:i] objectAtIndex:k] isEqual: @"#"]){
                 _rectNode.fillColor = [SKColor blackColor];
             }
+    
             [self addChild:_rectNode];
             
-            x+=width;
+            x+=blockWidth;
         }
-        x = 0-self.size.width/2;
-        y -=  height;
+        x = 0-mazeScreenWidth/2;
+        y -=  blockHeight;
     }
     
 
 }
-- (void)touchDownAtPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor greenColor];
-    [self addChild:n];
+-(void) keyDown:(NSEvent *)event{
+    if([event keyCode] == 49)
+        isForwardAnimating = YES;
+    if([event keyCode] == 51)
+        isBackwardAnimating = YES;
 }
+-(void) keyUp:(NSEvent *)event{
+    NSLog(@"Characters: %@", [event characters]);
+    NSLog(@"KeyCode: %hu", [event keyCode]);
+    if([event keyCode] == 124)
+        [self nextAnimationFrame];
+    
+    if([event keyCode] == 123)
+        [self previousAnimationFrame];
+    if([event keyCode] == 18){
+        file =@"smallMaze";
+        [self solve:file method:solveMethod];
+    }
+    if([event keyCode] == 19){
+        file = @"mediumMaze";
+        [self solve:file method:solveMethod];
+    }
+    if([event keyCode] == 20){
+        file = @"largeMaze";
+        [self solve:file method:solveMethod];
+    }
+    if([event keyCode] == 11){
+        solveMethod = 1;
+        [self solve:file method:solveMethod];
+    }
+    if([event keyCode] == 2){
+        solveMethod = 2;
+        [self solve:file method:solveMethod];
+    }
 
-- (void)touchMovedToPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor blueColor];
-    [self addChild:n];
+    isForwardAnimating = NO;
+    isBackwardAnimating = NO;
 }
-
-- (void)touchUpAtPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor redColor];
-    [self addChild:n];
+- (void)mouseDown:(NSEvent *)theEvent {
+    isForwardAnimating = !isForwardAnimating;
 }
-
-- (void)keyDown:(NSEvent *)theEvent {
-    switch (theEvent.keyCode) {
-        case 0x31 /* SPACE */:
-            // Run 'Pulse' action from 'Actions.sks'
-            [_label runAction:[SKAction actionNamed:@"Pulse"] withKey:@"fadeInOut"];
-            break;
-            
-        default:
-            NSLog(@"keyDown:'%@' keyCode: 0x%02X", theEvent.characters, theEvent.keyCode);
-            break;
+-(void) previousAnimationFrame{
+    
+    if(steps < 0)
+        return;
+    AnimationState *aState = [solution objectAtIndex:steps];
+    if(aState.addToScreen){
+        [aState.state.graphic removeFromParent];
+    }else{
+        [self addChild:aState.state.graphic];
+    }
+    steps--;
+}
+-(void) nextAnimationFrame{
+    steps++;
+    if(steps == [solution count]){
+        isForwardAnimating = NO;
+        isBackwardAnimating = NO;
+        steps = (int)[solution count]-1;
+        return;
+    }
+    AnimationState *aState = [solution objectAtIndex:steps];
+    if(aState.addToScreen){
+        [self addChild:aState.state.graphic];
+    }else{
+        [aState.state.graphic removeFromParent];
     }
 }
-
-- (void)mouseDown:(NSEvent *)theEvent {
-    steps++;
-    [self removeAllChildren];
-    [masterMaze loadMaze:fileName];
-    [self drawMaze:masterMaze];
-    [self solve:masterMaze solution:[[NSMutableArray alloc] init] mode:2];
-}
-- (void)mouseDragged:(NSEvent *)theEvent {
-}
-- (void)mouseUp:(NSEvent *)theEvent {
-}
-
 
 -(void)update:(CFTimeInterval)currentTime {
-    // Called before each frame is rendered
-}
--(BOOL) solve:(Maze*) maze solution:(NSMutableArray *) sol mode:(int) mode{
-    if(!sol){
-        sol = [[NSMutableArray alloc] init];
-    }
-    State *start = [maze getStart];
-    counter = 0;
-    //BFS
-    if(mode == 1){
-        BfsState *state0 = [[BfsState alloc] initWithXY:start.x y:start.y];
-        Queue *q = [[Queue alloc] initWith:state0];
-        if(![self solveBfsIterative:q maze:maze]){
-            return NO;
-        }
-        
-        //Trace it back from the end
-        BfsState *state = (BfsState *)[q peek];
-        [sol addObject:state];
-        while(state.prev){
-            NSLog(@"Bfs -- X: %d Y: %d",state.x,state.y);
-            state = state.prev;
-            [sol addObject:state];
-        }
-    }
-    //DFS
-    if(mode == 2){
-        DfsState *state0 = [[DfsState alloc] initWithXY:start.x y:start.y];
-        Stack *stack = [[Stack alloc] init];
-        if(![self solveDfs:state0 path:stack maze:maze]){
-            return NO;
-        }
-        DfsState *end = (DfsState *)[stack peek];
-        while([stack peek]){
-            [sol insertObject:[stack pop] atIndex:0];
-        }
-        NSLog(@"Dfs -- X: %d Y: %d",end.x,end.y);
-    }
-    NSLog(@"Depth: %d",counter);
-    return YES;
-}
-
-//Iterative
--(BOOL) solveBfsIterative:(Queue *) q maze:(Maze *) maze{
-    while(YES){
-        //Debugger
-        counter ++;
-        
-        if([q isEmpty]){
-            return NO;
-        }
-        
-        if([maze isFinished:[q peek]]){
-            return YES;
-        }
-        
-        BfsState *current = (BfsState *)[q dequeue];
-        [maze mark:current];
-        while([current hasNext:maze]){
-            BfsState *neighbor = [current getNext:maze];
-            if(neighbor){
-                [q enqueue:neighbor];
-            }
-        }
-    }
-}
-
-
-// Recursive
--(BOOL) solveBfsRecursive:(Queue *) q maze:(Maze *) maze{
-    counter ++;
-    if([q isEmpty]){
-        return NO;
-    }
-    if([maze isFinished:[q peek]]){
-        return YES;
-    }
-    BfsState *current = (BfsState *)[q dequeue];
-    [maze mark:current];
-    while([current hasNext:maze]){
-        BfsState *neighbor = [current getNext:maze];
-        if(neighbor){
-            [q enqueue:neighbor];
-        }
-    }
-    return [self solveBfsRecursive:q maze:maze];
-}
-
-
-
--(BOOL)solveDfs:(DfsState *) current path:(Stack *) path maze:(Maze *) maze{
-    if(counter > steps){
-        //return YES;
-    }
-    counter ++;
-    if([path isEmpty]){
-        if(![maze isStart:current])
-            return NO;
-    }
-    if([maze isFinished:current]){
-        [path push:current];
-        return YES;
-    }
-    
-    while([current hasNext:maze]){
-        DfsState *next = [current getNext:maze];
-        if(next){
-            if(![[path peek] equals:next]){
-                NSLog(@"PUSHING x: %d y: %d",current.x,current.y);
-                [current setupGraphics:self.size.width windowHeight:self.size.height blockWidth:width blockHeight:height];
-                current.graphic.fillColor = [SKColor yellowColor];
-                [self addChild:current.graphic];
-                [path push:current];
-                [maze mark:current];
-                if(![self solveDfs:next path:path maze:maze]){
-                    DfsState *temp = (DfsState *)[path pop];
-                    NSLog(@"POPING x: %d y: %d",temp.x,temp.y);
-                    [temp.graphic removeFromParent];
-                }else{
-                    return YES;
-                }
+    if(isForwardAnimating){
+        if(currentTime!=-1){
+            if(currentTime-previousTime > interval){
+                [self nextAnimationFrame];
+                previousTime = currentTime;
             }
         }else{
-            break;
+            previousTime = currentTime;
         }
     }
-    return NO;
+    if(isBackwardAnimating){
+        if(currentTime!=-1){
+            if(currentTime-previousTime > interval){
+                [self previousAnimationFrame];
+                previousTime = currentTime;
+                
+            }
+        }else{
+            previousTime = currentTime;
+        }
+    }
 }
+
 @end
