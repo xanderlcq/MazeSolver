@@ -74,6 +74,7 @@
     double x = 0-mazeScreenWidth/2;
     double y = 0+mazeScreenHeight/2-blockHeight;
     steps = 0;
+    
     for(int i = 0; i < [mazeArray count];i++){
         for(int k = 0; k < [[mazeArray objectAtIndex:0] count];k++){
             SKShapeNode *_rectNode = [SKShapeNode shapeNodeWithRect:CGRectMake(x, y, blockWidth, blockHeight)];
@@ -97,8 +98,6 @@
         x = 0-mazeScreenWidth/2;
         y -=  blockHeight;
     }
-    
-
 }
 -(void) keyDown:(NSEvent *)event{
     if([event keyCode] == 49)
